@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-Commerce Prototype
 
-## Getting Started
+A **Next.js + Tailwind CSS + Framer Motion** e-commerce prototype showcasing a modern sportswear collection. This is a demo/prototype for portfolio purposes.
 
-First, run the development server:
+---
+
+## 🌟 Features
+
+- Responsive hero section with animations (Framer Motion)
+- Product listing page with cards
+- Product details page with size selection
+- Add to bag button (simulated)
+- Smooth mobile-friendly design
+- Tailwind CSS styling
+
+---
+
+## 💻 Tech Stack
+
+- **Frontend:** Next.js 13+, React 18  
+- **Styling:** Tailwind CSS  
+- **Animations:** Framer Motion  
+- **Images:** Public folder (local assets)  
+
+---
+
+## 📸 Screenshots / Demo
+
+![Hero](./public/images/jordan.png)  
+![Products](./public/images/shop-banner.png)
+![Product Card](./public/images/jordan1.png) 
+
+---
+
+## 🚀 Installation
+
+1. Clone the repo:
 
 ```bash
+git clone https://github.com/yourusername/ecommerce-prototype.git
+cd ecommerce-prototype
+
+nstall dependencies:
+npm install
+# or
+yarn install
+
+Run the development server:
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+🛠 Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Navigate to /shop to see the product listing.
 
-## Learn More
+Click a product to see details and select sizes.
 
-To learn more about Next.js, take a look at the following resources:
+Click “Add to Bag” to simulate adding a product.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+⚡ Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Connect to a real backend (API + database)
 
-## Deploy on Vercel
+Implement shopping cart and checkout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Add search and filter functionality
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Optimize image loading with Next.js Image component
+
+
+📄 License
+
+This project is for portfolio/demo purposes only.
+
+---
+
+### ✅ Notes:
+
+1. Replace `https://github.com/yourusername/ecommerce-prototype.git` with your actual repo URL.  
+2. Replace the screenshot paths with actual images from your `/public/images/`.  
+3. You can add more features as you develop, like banners, carousel, or filters.  
+
+---
