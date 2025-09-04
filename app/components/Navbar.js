@@ -3,10 +3,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { FaShoppingCart } from "react-icons/fa";
+import { useCart } from "@/app/context/CartContext";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { cartCount } = useCart(); // ✅ Get cart count from context
 
   const textColor = pathname === "/" ? "text-white" : "text-black";
 
@@ -25,7 +28,16 @@ export default function Navbar() {
       </ul>
 
       {/* Cart (desktop only) */}
-      <div className="hidden md:flex font-bold cursor-pointer">Cart</div>
+      <div className="hidden md:flex relative cursor-pointer">
+        <Link href="/cart">
+          <FaShoppingCart size={24} />
+        </Link>
+        {cartCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            {cartCount}
+          </span>
+        )}
+      </div>
 
       {/* Burger Button (mobile only) */}
       <button onClick={() => setIsOpen(true)} className="md:hidden">
@@ -57,7 +69,16 @@ export default function Navbar() {
           <li>
             <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
           </li>
-          <li className="cursor-pointer">Cart</li>
+          <li className="relative cursor-pointer">
+            <Link href="/cart" onClick={() => setIsOpen(false)}>
+              <FaShoppingCart size={28} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

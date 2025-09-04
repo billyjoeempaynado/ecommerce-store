@@ -1,23 +1,19 @@
 "use client";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import { useCart } from "@/app/context/CartContext";
+import { useParams } from "next/navigation";
 import { products } from "@/app/lib/products";
 import Navbar from "@/app/components/Navbar";
 
 export default function ProductPage() {
-  const { id } = useParams();
+  const { id } = useParams(); // get product id from URL
+  const productId = parseInt(id, 10); // convert to number
+  const product = products.find((p) => p.id === productId); // find product
+
+  const { addToCart } = useCart();
   const [size, setSize] = useState(null);
 
-  // Parse id safely
-  const productId = parseInt(id, 10);
-  const product = products.find((p) => p.id === productId);
-
-  // Debug logs (check console in browser devtools)
-  console.log("Params ID:", id);
-  console.log("Product found:", product);
-
-  // If no product found
   if (!product) {
     return (
       <>
@@ -27,9 +23,18 @@ export default function ProductPage() {
     );
   }
 
-  const handleAddToBag = () => {
+  const handleAddToCart = () => {
     if (!size) return;
-    alert(`✅ Added ${product.name} (size ${size}) to bag`);
+
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      selectedSize: size,
+      category: product.category
+
+    });
   };
 
   return (
@@ -37,16 +42,8 @@ export default function ProductPage() {
       <Navbar />
       <div className="flex flex-col md:flex-row mt-20 items-center justify-center w-[92%] max-w-4xl mx-auto p-6">
         {/* Product Image */}
-        <div className="shadow-sm relative w-full h-96 rounded-lg overflow-hidden">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 
-                   (max-width: 1200px) 50vw, 
-                   33vw"
-            className="object-contain"
-          />
+        <div className="relative w-full h-64 md:h-96 shadow-sm rounded-lg overflow-hidden">
+          <Image src={product.image} alt={product.name} fill className="object-contain p-6" />
         </div>
 
         {/* Product Info */}
@@ -59,35 +56,27 @@ export default function ProductPage() {
           <div className="mt-4">
             <h3 className="font-bold">Choose Size:</h3>
             <div className="flex flex-wrap gap-3 mt-2">
-              {Array.isArray(product.sizes) &&
-                product.sizes.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setSize(s)}
-                    className={`px-4 py-2 border rounded-lg transition ${
-                      size === s
-                        ? "bg-black text-white border-black"
-                        : "bg-white hover:bg-gray-100"
-                    }`}
-                  >
-                    {s}
-                  </button>
-                ))}
+              {product.sizes?.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSize(s)}
+                  className={`px-4 py-2 border rounded-lg transition ${
+                    size === s ? "bg-black text-white border-black" : "bg-white hover:bg-gray-100"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
             </div>
-            {size && (
-              <p className="mt-2 text-sm text-gray-600">
-                Selected size: <span className="font-semibold">{size}</span>
-              </p>
-            )}
           </div>
 
-          {/* Add to Bag */}
+          {/* Add to Cart */}
           <button
-            onClick={handleAddToBag}
-            className="mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 disabled:bg-gray-400"
+            onClick={handleAddToCart}
             disabled={!size}
+            className="mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 disabled:bg-gray-400"
           >
-            {size ? "Add to Bag" : "Select a Size"}
+            {size ? "Add to Cart" : "Select a Size"}
           </button>
         </div>
       </div>

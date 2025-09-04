@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { products as defaultProducts } from "@/app/lib/products"; // fallback
 import HeroCarousel from "@/app/components/HeroCarousel";
+import Footer from "../components/Footer";
 
 export default function Items({ products = defaultProducts }) {
   return (
@@ -34,6 +35,7 @@ export default function Items({ products = defaultProducts }) {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
