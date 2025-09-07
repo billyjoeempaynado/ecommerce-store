@@ -3,7 +3,6 @@ import CheckoutForm from "@/app/components/CheckoutForm";
 import CartSummary from "@/app/components/CartSummary";
 import { useCart } from "@/app/context/CartContext";
 
-
 export default function CheckoutPage() {
   const { subtotal } = useCart();
 
@@ -18,9 +17,6 @@ export default function CheckoutPage() {
       <div className="w-full md:w-1/3">
         <CartSummary subtotal={subtotal} />
       </div>
-          
     </div>
-
-
   );
 }

@@ -42,7 +42,7 @@ export default function ProductPage() {
   return (
     <>
       <Navbar />
-      <BackButton className="fixed top-4 left-4 z-50" />
+      <BackButton className="mt-20 top-4 left-4 z-50" />
       <div className="flex flex-col md:flex-row mt-20 items-center justify-center w-[92%] max-w-4xl mx-auto p-6">
         {/* Product Image */}
         <div className="relative w-full h-64 md:h-96 shadow-sm rounded-lg overflow-hidden">

@@ -1,9 +1,15 @@
 "use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import InputField from "./InputField";
 import SelectField from "./SelectField";
+import { useCart } from "../context/CartContext";
 
 export default function CheckoutForm() {
+  const router = useRouter();
+  const { cartItems, subtotal, clearCart } = useCart();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -12,6 +18,10 @@ export default function CheckoutForm() {
     postalCode: "",
     country: "",
     paymentMethod: "",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+    paypalEmail: "",
   });
 
   const handleChange = (e) => {
@@ -21,8 +31,22 @@ export default function CheckoutForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Checkout Data:", formData);
-    alert("✅ Order placed successfully!");
+
+    if (cartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    const orderData = {
+      customer: formData,
+      items: cartItems,
+      subtotal,
+    };
+
+    clearCart();
+
+    const orderQuery = encodeURIComponent(JSON.stringify(orderData));
+    router.push(`/thank-you?order=${orderQuery}`);
   };
 
   return (
@@ -34,14 +58,7 @@ export default function CheckoutForm() {
       <InputField label="Address" name="address" value={formData.address} onChange={handleChange} />
       <InputField label="City" name="city" value={formData.city} onChange={handleChange} />
       <InputField label="Postal Code" name="postalCode" value={formData.postalCode} onChange={handleChange} />
-
-      <SelectField
-        label="Country"
-        name="country"
-        options={["Philippines", "USA", "UK"]}
-        value={formData.country}
-        onChange={handleChange}
-      />
+      <SelectField label="Country" name="country" options={["Philippines", "USA", "UK"]} value={formData.country} onChange={handleChange} />
 
       <SelectField
         label="Payment Method"
@@ -51,10 +68,22 @@ export default function CheckoutForm() {
         onChange={handleChange}
       />
 
-      <button
-        type="submit"
-        className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition"
-      >
+      {/* Conditional Fields */}
+      {formData.paymentMethod === "Credit Card" && (
+        <div className="space-y-2 mt-4">
+          <InputField label="Card Number" name="cardNumber" value={formData.cardNumber} onChange={handleChange} />
+          <InputField label="Expiry Date" name="expiryDate" value={formData.expiryDate} onChange={handleChange} />
+          <InputField label="CVV" name="cvv" value={formData.cvv} onChange={handleChange} />
+        </div>
+      )}
+
+      {formData.paymentMethod === "PayPal" && (
+        <div className="space-y-2 mt-4">
+          <InputField label="PayPal Email" name="paypalEmail" type="email" value={formData.paypalEmail} onChange={handleChange} />
+        </div>
+      )}
+
+      <button type="submit" className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition mt-4">
         Place Order
       </button>
     </form>

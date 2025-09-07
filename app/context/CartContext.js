@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]); // ✅ always array
+  const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
     const existing = cartItems.find(
@@ -35,13 +35,23 @@ export const CartProvider = ({ children }) => {
     setCartItems((prev) => prev.filter((item) => item.uid !== uid));
   };
 
+  const clearCart = () => setCartItems([]); // ✅ new function to reset cart
+
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
-      value={{ cartItems, cartCount, addToCart, updateQuantity, removeFromCart, subtotal }}
+      value={{
+        cartItems,
+        cartCount,
+        subtotal,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        clearCart, // ✅ provide clearCart to context
+      }}
     >
       {children}
     </CartContext.Provider>
