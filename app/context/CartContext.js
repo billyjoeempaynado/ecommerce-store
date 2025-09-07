@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]); // ✅ always array
 
   const addToCart = (product) => {
     const existing = cartItems.find(
@@ -25,23 +25,23 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // ✅ Define updateQuantity
   const updateQuantity = (uid, newQuantity) => {
     setCartItems((prev) =>
       prev.map((item) => (item.uid === uid ? { ...item, quantity: newQuantity } : item))
     );
   };
 
+  const removeFromCart = (uid) => {
+    setCartItems((prev) => prev.filter((item) => item.uid !== uid));
+  };
+
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
-      value={{
-        cartItems,
-        cartCount,
-        addToCart,
-        updateQuantity, // ✅ include it here
-      }}
+      value={{ cartItems, cartCount, addToCart, updateQuantity, removeFromCart, subtotal }}
     >
       {children}
     </CartContext.Provider>

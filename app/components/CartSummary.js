@@ -1,9 +1,11 @@
+"use client";
+
 export default function CartSummary({ subtotal, deliveryFee = 150 }) {
   const total = subtotal + deliveryFee;
 
   return (
-    <div className="p-8 bg-white border-b-1  h-fit">
-      <h2 className="text-xl font-bold mb-4">Summary</h2>
+    <div className="p-8 bg-white shadow rounded-lg h-fit">
+      <h2 className="text-xl font-bold mb-4">Order Summary</h2>
 
       <div className="flex justify-between text-sm mb-2">
         <span>Subtotal</span>
@@ -11,7 +13,7 @@ export default function CartSummary({ subtotal, deliveryFee = 150 }) {
       </div>
 
       <div className="flex justify-between text-sm mb-2">
-        <span>Estimated Delivery & Handling</span>
+        <span>Delivery Fee</span>
         <span>₱ {deliveryFee}</span>
       </div>
 
@@ -21,10 +23,6 @@ export default function CartSummary({ subtotal, deliveryFee = 150 }) {
         <span>Total</span>
         <span>₱ {total}</span>
       </div>
-
-      <button className="w-full bg-black  text-white py-3 rounded-lg hover:bg-gray-800 transition">
-        Checkout
-      </button>
     </div>
   );
 }

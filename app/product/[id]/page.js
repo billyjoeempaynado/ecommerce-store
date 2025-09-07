@@ -5,6 +5,7 @@ import { useCart } from "@/app/context/CartContext";
 import { useParams } from "next/navigation";
 import { products } from "@/app/lib/products";
 import Navbar from "@/app/components/Navbar";
+import BackButton from "@/app/components/BackButton";
 
 export default function ProductPage() {
   const { id } = useParams(); // get product id from URL
@@ -23,23 +24,25 @@ export default function ProductPage() {
     );
   }
 
-  const handleAddToCart = () => {
-    if (!size) return;
+    const handleAddToCart = () => {
+      if (!size) return;
 
-    addToCart({
-      id: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.price,
-      selectedSize: size,
-      category: product.category
+      addToCart({
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        selectedSize: size,
+        category: product.category,
+      });
 
-    });
-  };
+      alert(`${product.name} added to cart 🛒`);
+    };
 
   return (
     <>
       <Navbar />
+      <BackButton className="fixed top-4 left-4 z-50" />
       <div className="flex flex-col md:flex-row mt-20 items-center justify-center w-[92%] max-w-4xl mx-auto p-6">
         {/* Product Image */}
         <div className="relative w-full h-64 md:h-96 shadow-sm rounded-lg overflow-hidden">

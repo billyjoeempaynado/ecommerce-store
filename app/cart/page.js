@@ -4,6 +4,7 @@ import Navbar from "@/app/components/Navbar";
 import { useCart } from "@/app/context/CartContext";
 import CartItem from "@/app/components/cart/CartItem";
 import CartSummary from "@/app/components/cart/CartSummary";
+import BackButton from "../components/BackButton";
 
 export default function CartPage() {
   const { cartItems, cartCount, removeFromCart, updateQuantity } = useCart();
@@ -24,7 +25,7 @@ export default function CartPage() {
       <section className="mb-20">
         <Navbar />
       </section>
-
+      <BackButton className="fixed top-4 left-4 z-50" />
       <section className="px-4 sm:px-6 lg:px-10 xl:px-20">
         <div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Cart Items */}
@@ -47,5 +48,6 @@ export default function CartPage() {
         </div>
       </section>
     </>
+    
   );
 }
