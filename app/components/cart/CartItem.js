@@ -42,7 +42,7 @@ export default function CartItem({ item, removeFromCart, updateQuantity }) {
                 onClick={() => updateQuantity(item.uid, item.quantity - 1)}
                 className="p-1 bg-gray-200 rounded"
               >
-                <HiOutlineMinusSm size={20} />
+                <HiOutlineMinusSm size={17} />
               </motion.button>
             )}
           </AnimatePresence>
