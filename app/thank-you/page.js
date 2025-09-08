@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+// ✅ Helper for price formatting
+const formatPrice = (amount) =>
+  new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+  }).format(amount);
+
 export default function ThankYouPage() {
   const searchParams = useSearchParams();
   const [order, setOrder] = useState(null);
@@ -17,9 +24,14 @@ export default function ThankYouPage() {
 
   return (
     <div className="mt-20 max-w-3xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">Thank You for Your Order!</h1>
-      <p className="text-center mb-8">We have received your order and it is being processed.</p>
+      <h1 className="text-3xl font-bold mb-4 text-center">
+        Thank You for Your Order!
+      </h1>
+      <p className="text-center mb-8">
+        We have received your order and it is being processed.
+      </p>
 
+      {/* Order Summary */}
       <div className="bg-white p-6 shadow rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
         {order.items.map((item) => (
@@ -27,49 +39,64 @@ export default function ThankYouPage() {
             <div>
               {item.name} ({item.selectedSize}) x {item.quantity}
             </div>
-            <div>₱ {item.price * item.quantity}</div>
+            <div>{formatPrice(item.price * item.quantity)}</div>
           </div>
         ))}
         <div className="flex justify-between font-bold mt-4">
           <span>Subtotal:</span>
-          <span>₱ {order.subtotal}</span>
+          <span>{formatPrice(order.subtotal)}</span>
         </div>
       </div>
 
+      {/* Customer Info */}
       <div className="mt-6 bg-white p-6 shadow rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Customer Info</h2>
-        <p><strong>Name:</strong> {order.customer.fullName}</p>
-        <p><strong>Email:</strong> {order.customer.email}</p>
-        <p><strong>Address:</strong> {order.customer.address}, {order.customer.city}, {order.customer.postalCode}, {order.customer.country}</p>
-        <p><strong>Payment Method:</strong> {order.customer.paymentMethod}</p>
+        <p>
+          <strong>Name:</strong> {order.customer.fullName}
+        </p>
+        <p>
+          <strong>Email:</strong> {order.customer.email}
+        </p>
+        <p>
+          <strong>Address:</strong> {order.customer.address},{" "}
+          {order.customer.city}, {order.customer.postalCode},{" "}
+          {order.customer.country}
+        </p>
+        <p>
+          <strong>Payment Method:</strong> {order.customer.paymentMethod}
+        </p>
 
+        {/* Secure Credit Card Display */}
         {order.customer.paymentMethod === "Credit Card" && (
           <>
-            <p><strong>Card Number:</strong> {order.customer.cardNumber}</p>
-            <p><strong>Expiry Date:</strong> {order.customer.expiryDate}</p>
-            <p><strong>CVV:</strong> {order.customer.cvv}</p>
+            <p>
+              <strong>Card Number:</strong> **** **** ****{" "}
+              {order.customer.cardNumber.slice(-4)}
+            </p>
+            <p>
+              <strong>Expiry Date:</strong> {order.customer.expiryDate}
+            </p>
           </>
         )}
 
         {order.customer.paymentMethod === "PayPal" && (
-          <p><strong>PayPal Email:</strong> {order.customer.paypalEmail}</p>
+          <p>
+            <strong>PayPal Email:</strong> {order.customer.paypalEmail}
+          </p>
         )}
       </div>
+
+      {/* Action Buttons */}
       <div className="mt-6 flex gap-4 justify-center">
-       <Link href="/">
-        <button
-          className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-        >
-          Back to Home
-        </button>
+        <Link href="/">
+          <button className="bg-black text-white px-5 py-2 rounded hover:bg-gray-800 transition">
+            Back to Home
+          </button>
         </Link>
         <Link href="/shop">
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-         
-        >
-          Order Again
-        </button>
+          <button className="border border-blue-600 text-blue-600 px-5 py-2 rounded hover:bg-blue-50 transition">
+            Order Again
+          </button>
         </Link>
       </div>
     </div>

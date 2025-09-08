@@ -52,7 +52,7 @@ export default function HeroCarousel() {
       </div>
 
       {/* Left/Right Arrows */}
-      <button
+      {/* <button
         onClick={prevSlide}
         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition"
       >
@@ -63,7 +63,7 @@ export default function HeroCarousel() {
         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition"
       >
         <ChevronRightIcon className="h-6 w-6" />
-      </button>
+      </button> */}
 
       {/* Dots */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
